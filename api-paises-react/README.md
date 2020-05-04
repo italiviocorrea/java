@@ -33,6 +33,28 @@ no terminal linux :
 ```
 ./mvnw quarkus:dev
 ```
+As seguintes URIs para acessar : metrics, health check, jaeguer e pgAdmin.
+- Documentação OpenAPI
+```
+http://localhost:8080/dfe/v1/paises/docs/
+```
+- Métricas
+```
+http://localhost:8080/dfe/v1/paises/metrics/
+http://localhost:8080/dfe/v1/paises/metrics/application
+
+```
+- Health Checks
+```
+http://localhost:8080/dfe/v1/paises/health/
+http://localhost:8080/dfe/v1/paises/health/live
+http://localhost:8080/dfe/v1/paises/health/ready
+
+```
+- PgAdmin : ferramenta para gerenciar o postgresql
+```
+http://localhost:8181
+```
 
 ## Compilando e executando o aplicativo
 

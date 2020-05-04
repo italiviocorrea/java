@@ -149,7 +149,6 @@ public class PaisesService extends MyAbstractLogging {
         return client
                 .preparedQuery("UPDATE paises SET nome = $1, sigla = $2 WHERE id = $3",
                         Tuple.of(paises.nome, paises.sigla, id))
-//                .ifNoItem().after(Duration.ofMillis(100)).failWith(new DBSemConexaoException("Tempo limite esgotado"))
                 .onItem().apply(pgRowSet -> pgRowSet.rowCount() == 1);
     }
 

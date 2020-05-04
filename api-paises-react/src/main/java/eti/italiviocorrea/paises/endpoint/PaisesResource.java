@@ -67,10 +67,10 @@ public class PaisesResource extends MyAbstractResource {
                 .onItem().apply(response -> addLink(uriInfo,
                         response,
                         criarLink(uriInfo,
-                                "v1/paises" + paises.id,
+                                api_resource_context + paises.id,
                                 "GET",
                                 "Buscar por ID",
-                                "application/json")))
+                                api_paises_resource_content_type)))
                 .onItem().apply(ResponseBuilder::build);
     }
 
@@ -88,10 +88,10 @@ public class PaisesResource extends MyAbstractResource {
                 .onItem().apply(response -> addLink(uriInfo,
                         response,
                         criarLink(uriInfo,
-                                "v1/paises" + id,
+                                api_resource_context + id,
                                 "GET",
                                 "Buscar por ID",
-                                "application/json")))
+                                api_paises_resource_content_type)))
                 .onItem().apply(ResponseBuilder::build);
     }
 
@@ -107,11 +107,13 @@ public class PaisesResource extends MyAbstractResource {
                 .onItem().apply(removido -> removido ? Status.NO_CONTENT : Status.NOT_FOUND)
                 .onItem().apply(status -> Response.status(status))
                 .onItem().apply(response -> addLink(uriInfo, response,
-                        criarLink(uriInfo,
-                                "v1/paises",
+                        criarLinkPage(uriInfo,
+                                offset_default,
+                                limit_default,
+                                api_resource_context,
                                 "GET",
                                 "Buscar todos",
-                                "application/json")))
+                                api_paises_resource_content_type)))
                 .onItem().apply(ResponseBuilder::build);
     }
 

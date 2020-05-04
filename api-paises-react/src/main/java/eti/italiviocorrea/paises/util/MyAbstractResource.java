@@ -15,7 +15,19 @@ public abstract class MyAbstractResource extends MyAbstractLogging {
 
     @Inject
     @ConfigProperty(name = "api_paises.resource.context", defaultValue = "v1/paises/")
-    String api_resource_context;
+    public String api_resource_context;
+
+    @Inject
+    @ConfigProperty(name = "api_paises.resource.content.type", defaultValue = "application/text")
+    public String api_paises_resource_content_type;
+
+    @Inject
+    @ConfigProperty(name = "api_paises.resource.offset.default", defaultValue = "1")
+    protected short offset_default;
+
+    @Inject
+    @ConfigProperty(name = "api_paises.resource.limit.default", defaultValue = "20")
+    protected short limit_default;
 
     protected Response.ResponseBuilder criarRespostaTodos(@Context UriInfo uriInfo,
                                                           PaisesResposta paises,
@@ -31,17 +43,17 @@ public abstract class MyAbstractResource extends MyAbstractLogging {
 
             if (pageOpt.firstPage > 0) {
                 response.links(
-                        criarLinkPage(uriInfo, pageOpt.firstPage, limit, api_resource_context, "GET", "Primeira", "application/json")
+                        criarLinkPage(uriInfo, pageOpt.firstPage, limit, api_resource_context, "GET", "Primeira", api_paises_resource_content_type)
                 );
             }
             if (pageOpt.nextPage > 0) {
                 response.links(
-                        criarLinkPage(uriInfo, pageOpt.nextPage, limit, api_resource_context, "GET", "Proxima", "application/json")
+                        criarLinkPage(uriInfo, pageOpt.nextPage, limit, api_resource_context, "GET", "Proxima", api_paises_resource_content_type)
                 );
             }
             if (pageOpt.prevPage > 0) {
                 response.links(
-                        criarLinkPage(uriInfo, pageOpt.prevPage, limit, api_resource_context, "GET", "Anterio", "application/json")
+                        criarLinkPage(uriInfo, pageOpt.prevPage, limit, api_resource_context, "GET", "Anterio", api_paises_resource_content_type)
                 );
             }
 
@@ -58,12 +70,12 @@ public abstract class MyAbstractResource extends MyAbstractLogging {
 
         return paises != null ? Response.ok(paises)
                 .links(
-                        criarLink(uriInfo, api_resource_context, "GET", "Buscar todos", "application/json"),
-                        criarLink(uriInfo, api_resource_context + id, "PUT", "Atualizar", "application/json"),
-                        criarLink(uriInfo, api_resource_context + id, "DELETE", "Excluir", "application/json")
+                        criarLinkPage(uriInfo,offset_default,limit_default, api_resource_context, "GET", "Buscar todos", api_paises_resource_content_type),
+                        criarLink(uriInfo, api_resource_context + id, "PUT", "Atualizar", api_paises_resource_content_type),
+                        criarLink(uriInfo, api_resource_context + id, "DELETE", "Excluir", api_paises_resource_content_type)
                 ) : Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Não foi localizado o recurso solicitado")
                 .links(
-                        criarLink(uriInfo, api_resource_context, "GET", "Buscar todos", "application/json")
+                        criarLink(uriInfo, api_resource_context, "GET", "Buscar todos", api_paises_resource_content_type)
                 );
     }
 
