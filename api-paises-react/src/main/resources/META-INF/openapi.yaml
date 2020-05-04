@@ -1,0 +1,323 @@
+---
+openapi: 3.0.1
+info:
+  title: Países API
+  description: Esta é uma API para gerenciar Países.
+  contact:
+    name: Suporte Paises API
+    url: http://paisesapi.com/contact
+    email: techsupport@paisesapi.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+tags:
+- name: Paises
+  description: Todos as operações permitidas para o recurso Países
+paths:
+  /dfe/v1/paises:
+    get:
+      tags:
+      - Paises
+      summary: Listar todos os países cadastrados
+      parameters:
+      - name: limit
+        in: query
+        description: Número máximo de registros a serem retornados
+        required: true
+        schema:
+          default: 20
+          type: integer
+        example: "20"
+      - name: offset
+        in: query
+        description: Número da página a ser retornada
+        required: true
+        schema:
+          default: 1
+          type: integer
+        example: "1"
+      responses:
+        "404":
+          description: Não foi encontrado nenhum país
+        "500":
+          description: Erro Interno no servidor
+        "200":
+          description: Países encontrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  description: Schema da resposta padrão dos serviços.
+                  type: object
+                  properties:
+                    paises:
+                      description: Lista de países.
+                      required:
+                      - Id
+                      - nome
+                      - sigla
+                      type: object
+                      properties:
+                        Id:
+                          format: int64
+                          description: Código/identificador do país.
+                          type: integer
+                        nome:
+                          description: Nome do país.
+                          type: string
+                        sigla:
+                          description: Sigla do país.
+                          type: string
+                    version:
+                      description: Versão do schema de resposta.
+                      type: string
+                example: |-
+                  {
+                    "paises": [
+                      {
+                       "id":55,
+                       "nome":"BRASIL",
+                       "sigla":"BR"
+                      },
+                      {
+                       "id":833,
+                       "nome":"BARBADOS",
+                       "sigla":"BB"
+                      }
+                    ],
+                    "version":"3.0.0"
+                  }
+          links:
+            incluir:
+              operationId: incluir
+              description: Incluir um novo país
+    post:
+      tags:
+      - Paises
+      summary: Permite incluir um novo país
+      requestBody:
+        description: Dados do país a ser incluído
+        content:
+          application/json:
+            schema:
+              description: Esquema da entidade países.
+              required:
+              - Id
+              - nome
+              - sigla
+              type: object
+              properties:
+                Id:
+                  format: int64
+                  description: Código/identificador do país.
+                  type: integer
+                nome:
+                  description: Nome do país.
+                  type: string
+                sigla:
+                  description: Sigla do país.
+                  type: string
+              example: |-
+                {
+                  "id":55,
+                  "nome":"BRASIL",
+                  "sigla":"BR"
+                }
+      responses:
+        "500":
+          description: Erro interno no servidor
+        "406":
+          description: País não incluído
+        "204":
+          description: País incluído com sucesso
+          links:
+            self:
+              operationId: buscarPorId
+              parameters:
+                id: $response.body#/id
+              description: Buscar país pelo ID
+  /dfe/v1/paises/{id}:
+    get:
+      tags:
+      - Paises
+      summary: Busca um país pelo ID/código/identificador.
+      parameters:
+      - name: id
+        in: path
+        description: Código/Identificador do país a ser buscado
+        required: true
+        schema:
+          type: integer
+        example: "1058"
+      responses:
+        "500":
+          description: Erro Interno no servidor
+        "404":
+          description: País não encontrado
+          links:
+            buscar_todos:
+              operationId: buscarTodos
+              description: Buscar lista de país
+        "200":
+          description: País encontrado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paises'
+                example: |-
+                  {
+                    "id":55,
+                    "nome":"BRASIL",
+                    "sigla":"BR"
+                  }
+          links:
+            buscar_todos:
+              operationId: buscarTodos
+              description: Buscar lista de país
+            atualizar:
+              operationId: atualizar
+              parameters:
+                id: $response.body#/id
+              description: Atualizar dados do país
+            excluir:
+              operationId: remover
+              parameters:
+                id: $response.body#/id
+              description: Remover um país pelo ID
+    put:
+      tags:
+      - Paises
+      summary: Permite modificar os dados de um país
+      parameters:
+      - name: id
+        in: path
+        description: Código/Identificador do país a ser modificado
+        required: true
+        schema:
+          type: integer
+        example: "1058"
+      requestBody:
+        description: Dados do país a ser modificado
+        content:
+          application/json:
+            schema:
+              description: Esquema da entidade países.
+              required:
+              - Id
+              - nome
+              - sigla
+              type: object
+              properties:
+                Id:
+                  format: int64
+                  description: Código/identificador do país.
+                  type: integer
+                nome:
+                  description: Nome do país.
+                  type: string
+                sigla:
+                  description: Sigla do país.
+                  type: string
+              example: |-
+                {
+                  "id":55,
+                  "nome":"BRASIL",
+                  "sigla":"BR"
+                }
+      responses:
+        "404":
+          description: País não encontrado para atualizar
+        "500":
+          description: Erro Interno no servidor
+        "412":
+          description: O código do País informado não esta correto
+        "204":
+          description: País atualizado com sucesso
+          links:
+            self:
+              operationId: buscarPorId
+              parameters:
+                id: $response.body#/id
+              description: Buscar país pelo ID
+    delete:
+      tags:
+      - Paises
+      summary: Excluí um país através do ID/codigo/identificador
+      parameters:
+      - name: id
+        in: path
+        description: Código/Identificador do país a ser removido
+        required: true
+        schema:
+          type: integer
+        example: "1058"
+      responses:
+        "500":
+          description: Erro Interno no servidor
+          content:
+            application/json: {}
+        "404":
+          description: País não encontrado para excluir
+          content:
+            application/json: {}
+        "204":
+          description: País excluído com sucesso
+          content:
+            application/json: {}
+          links:
+            buscar_todos:
+              operationId: buscarTodos
+              description: Buscar lista de país
+components:
+  schemas:
+    Paises:
+      description: Esquema da entidade países.
+      required:
+      - Id
+      - nome
+      - sigla
+      type: object
+      properties:
+        Id:
+          format: int64
+          description: Código/identificador do país.
+          type: integer
+        nome:
+          description: Nome do país.
+          type: string
+        sigla:
+          description: Sigla do país.
+          type: string
+      example: |-
+        {
+          "id":55,
+          "nome":"BRASIL",
+          "sigla":"BR"
+        }
+    PaisesResposta:
+      description: Schema da resposta padrão dos serviços.
+      type: object
+      properties:
+        paises:
+          description: Lista de países.
+          required:
+          - Id
+          - nome
+          - sigla
+          type: object
+          properties:
+            Id:
+              format: int64
+              description: Código/identificador do país.
+              type: integer
+            nome:
+              description: Nome do país.
+              type: string
+            sigla:
+              description: Sigla do país.
+              type: string
+        version:
+          description: Versão do schema de resposta.
+          type: string
