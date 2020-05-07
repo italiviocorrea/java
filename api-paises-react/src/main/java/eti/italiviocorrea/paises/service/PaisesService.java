@@ -14,12 +14,14 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.faulttolerance.Timeout;
+import org.eclipse.microprofile.opentracing.Traced;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
+@Traced
 @ApplicationScoped
 public class PaisesService extends MyAbstractLogging {
 
