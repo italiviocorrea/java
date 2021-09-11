@@ -1,0 +1,17 @@
+version: '3.5'
+
+services:
+
+  eshop:
+    image: icorrea/tracing-demo:0.0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - tracing-demo-net
+
+networks:
+  tracing-demo-net:
+    name: tdn
