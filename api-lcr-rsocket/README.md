@@ -28,5 +28,5 @@ _________________________
 
 ### Envidando uma requisição via cliente rsocket (rsc)
 
-`java -jar /home/icorrea/tools/rsocket-client/rsc-0.6.1.jar --request --route=api-lcr.incluir --debug tcp://localhost:7000 
+`java -jar rsc-0.6.1.jar --request --route=api-lcr.incluir --debug tcp://localhost:7000 
 -d '{"nomeAC":"AC SOLUTI Multipla v5","urlLcr":"http://ccd.acsoluti.com.br/lcr/ac-soluti-multipla-v5.crl","indiLcrDelta":0,"indiAtualzLcr":"S"}'`
