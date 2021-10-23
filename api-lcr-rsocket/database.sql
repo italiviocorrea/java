@@ -77,3 +77,6 @@ go
 
 create index IX_idItc on dfe_ac_possui_lcr (idItc)
 go
+
+insert into dfe_autoridade_certificadora(alias, nome) values ('ac_soluti_v5','AC SOLUTI Multipla v5')
+go
