@@ -16,7 +16,7 @@
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <quarkus.platform.version>1.4.2.Final</quarkus.platform.version>
-    <surefire-plugin.version>2.22.1</surefire-plugin.version>
+    <surefire-plugin.version>2.22.2</surefire-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -33,10 +33,12 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-logging-sentry</artifactId>
+      <version>${quarkus-plugin.version}</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy</artifactId>
+      <version>${quarkus-plugin.version}</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -91,6 +93,11 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-jdbc-mssql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.smallrye.reactive</groupId>
+      <artifactId>mutiny</artifactId>
+      <version>0.4.2</version>
     </dependency>
   </dependencies>
   <build>

@@ -1,0 +1,60 @@
+app:
+  verAplic: MS_DFe_LCR_test
+  secrets:
+    path: ${user.home}/docker/secrets/
+  tpAmb: 2
+  database:
+    dfeProducao:
+      name: dfe_producao
+      host: localhost
+      port: 1433
+      username: sa
+      password: db-local-dfeproducao
+logging:
+  level:
+    org:
+      springframework:
+        r2dbc: DEBUG
+    web: DEBUG
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 60
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        waitDurationInOpenState: 10s
+      shared:
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 30
+        slidingWindowSize: 100
+        waitDurationInOpenState: 45s
+    instances:
+      nf3edb:
+        baseConfig: default
+  retry:
+    configs:
+      default:
+        maxRetryAttempts: 4
+        waitDuration: 1000
+    instances:
+      nf3edb:
+        baseConfig: default
+spring:
+  application:
+    name: api-lcr
+  r2dbc:
+    initialization-mode: always
+    pool:
+      initial-size: 10
+      max-size: 128
+  rsocket:
+    server:
+      address: 0.0.0.0
+      port: ${RSOCKET_SERVER_PORT:7000}
+      transport: tcp

@@ -1,0 +1,59 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    user: root
+    expose:
+      - 1433
+    ports:
+      - 1433:1433
+    networks:
+      - mssql_net
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Standard
+      - SA_PASSWORD=senha123
+      - MSSQL_AGENT_ENABLED=true
+    volumes:
+      - /home/icorrea/srv/mssql/apilcrdb:/var/opt/mssql
+
+#  alibaba-rsocket-broker:
+#    image: linuxchina/alibaba-rsocket-broker:1.1.0
+#    ports:
+#      - "9997:9997"
+#      - "9998:9998"
+#      - "9999:9999"
+#    networks:
+#      - mssql_net
+
+#  consul:
+#    image: consul:1.10.0
+#    ports:
+#      - "8500:8500"
+#      - "8300:8300"
+#      - "8301:8301"
+#      - "8302:8302"
+#      - "8400:8400"
+#      - "8600:53/udp"
+#    networks:
+#      - mssql_net
+#
+#  nacos:
+#    image: nacos/nacos-server:1.4.2
+#    container_name: nacos-standalone
+#    environment:
+#      - PREFER_HOST_MODE=hostname
+#      - MODE=standalone
+#    ports:
+#      - "8848:8848"
+#    networks:
+#      - mssql_net
+
+networks:
+  mssql_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.35.0.0/16
