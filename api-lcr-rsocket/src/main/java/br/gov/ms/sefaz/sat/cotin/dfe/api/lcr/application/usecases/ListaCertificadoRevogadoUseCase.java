@@ -1,12 +1,12 @@
-package br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.usecases;
+package br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.usecases;
 
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.models.AcPossuiLcr;
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.models.AutoridadeCertificadora;
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.models.ListaCertificadoRevogado;
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.ports.inboud.ListaCertificadoRevogadoUseCasePort;
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.ports.outbound.AcPossuiLcrRepositoryPort;
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.ports.outbound.AutoridadeCertificadoraRepositoryPort;
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.ports.outbound.ListaCertificadoRevogadoRepositoryPort;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.domain.AcPossuiLcr;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.domain.AutoridadeCertificadora;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.domain.ListaCertificadoRevogado;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.ports.inboud.ListaCertificadoRevogadoUseCasePort;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.ports.outbound.AcPossuiLcrRepositoryPort;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.ports.outbound.AutoridadeCertificadoraRepositoryPort;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.ports.outbound.ListaCertificadoRevogadoRepositoryPort;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 

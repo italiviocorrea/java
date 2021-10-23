@@ -1,6 +1,6 @@
 package br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.adapters.inbound.controllers;
 
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.ports.inboud.ListaCertificadoRevogadoUseCasePort;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.ports.inboud.ListaCertificadoRevogadoUseCasePort;
 import br.gov.ms.sefaz.sat.cotin.dfe.core.rsocket.lcr.inbound.dtos.RequisicaoDTO;
 import br.gov.ms.sefaz.sat.cotin.dfe.core.rsocket.lcr.inbound.dtos.RespostaDTO;
 import br.gov.ms.sefaz.sat.cotin.dfe.core.rsocket.lcr.inbound.rsocket.APILcrRSocketEndpoint;

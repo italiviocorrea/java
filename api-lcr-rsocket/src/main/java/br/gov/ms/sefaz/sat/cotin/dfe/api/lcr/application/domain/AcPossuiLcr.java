@@ -1,4 +1,4 @@
-package br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.models;
+package br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.domain;
 
 import lombok.*;
 

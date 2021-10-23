@@ -47,7 +47,7 @@ resilience4j:
         baseConfig: default
 spring:
   application:
-    name: api-lcr
+    name: api-lcr-rsocket
   r2dbc:
     initialization-mode: always
     pool:

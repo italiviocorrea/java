@@ -1,8 +1,8 @@
 package br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.adapters.outbound.persistence.repositorys;
 
 import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.adapters.outbound.persistence.r2dbc.MssqlAutoridadeCertificadoraRepository;
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.models.AutoridadeCertificadora;
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.ports.outbound.AutoridadeCertificadoraRepositoryPort;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.domain.AutoridadeCertificadora;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.ports.outbound.AutoridadeCertificadoraRepositoryPort;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;

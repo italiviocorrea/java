@@ -2,8 +2,8 @@ package br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.adapters.outbound.persistence.repo
 
 import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.adapters.outbound.persistence.r2dbc.MssqlListaCertificadoRevogadoRepository;
 import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.adapters.outbound.persistence.r2dbc.entities.ListaCertificadoRevogadoEntity;
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.models.ListaCertificadoRevogado;
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.ports.outbound.ListaCertificadoRevogadoRepositoryPort;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.domain.ListaCertificadoRevogado;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.ports.outbound.ListaCertificadoRevogadoRepositoryPort;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;

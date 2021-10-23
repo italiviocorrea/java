@@ -1,6 +1,6 @@
-package br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.ports.outbound;
+package br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.ports.outbound;
 
-import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.models.ListaCertificadoRevogado;
+import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.application.domain.ListaCertificadoRevogado;
 import reactor.core.publisher.Mono;
 
 public interface ListaCertificadoRevogadoRepositoryPort {
