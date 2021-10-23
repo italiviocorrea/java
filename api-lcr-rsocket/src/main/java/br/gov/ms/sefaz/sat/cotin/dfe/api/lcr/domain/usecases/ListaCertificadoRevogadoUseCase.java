@@ -7,6 +7,7 @@ import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.ports.inboud.ListaCertificad
 import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.ports.outbound.AcPossuiLcrRepositoryPort;
 import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.ports.outbound.AutoridadeCertificadoraRepositoryPort;
 import br.gov.ms.sefaz.sat.cotin.dfe.api.lcr.domain.ports.outbound.ListaCertificadoRevogadoRepositoryPort;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 public class ListaCertificadoRevogadoUseCase implements ListaCertificadoRevogadoUseCasePort {
@@ -23,6 +24,7 @@ public class ListaCertificadoRevogadoUseCase implements ListaCertificadoRevogado
         this.acPossuiLcrRepository = acPossuiLcrRepository;
     }
 
+    @Transactional
     @Override
     public Mono<Void> incluirLcr(String nomeAC, String urlLcr) {
 

@@ -10,7 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @AllArgsConstructor
 @ToString
 @Builder
-@Table(value = "dfe_lista_certificado_revogado")
+@Table(value = "lista_certificado_revogado")
 public class ListaCertificadoRevogadoEntity {
 
     @Id

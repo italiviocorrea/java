@@ -24,7 +24,7 @@ import java.nio.charset.StandardCharsets;
 @Configuration
 @EnableR2dbcRepositories
 @RequiredArgsConstructor
-//@EnableTransactionManagement
+@EnableTransactionManagement
 public class DFeDatabaseConfig extends AbstractR2dbcConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -36,11 +36,11 @@ public class DFeDatabaseConfig extends AbstractR2dbcConfiguration {
     @Override
     public MssqlConnectionFactory connectionFactory() {
         MssqlConnectionConfiguration config = MssqlConnectionConfiguration.builder()
-                .host(env.getProperty("app.database.dfeProducao.host"))
-                .port(env.getProperty("app.database.dfeProducao.port", Integer.class))
-                .username(env.getProperty("app.database.dfeProducao.username"))
-                .password(getPassword(env.getProperty("app.database.dfeProducao.password")))
-                .database(env.getProperty("app.database.dfeProducao.name"))
+                .host(env.getProperty("app.database.lcrdb.host"))
+                .port(env.getProperty("app.database.lcrdb.port", Integer.class))
+                .username(env.getProperty("app.database.lcrdb.username"))
+                .password(getPassword(env.getProperty("app.database.lcrdb.password")))
+                .database(env.getProperty("app.database.lcrdb.name"))
                 .applicationName(env.getProperty("spring.application.name"))
                 .sendStringParametersAsUnicode(false)
                 .build();
@@ -48,10 +48,10 @@ public class DFeDatabaseConfig extends AbstractR2dbcConfiguration {
         return new MssqlConnectionFactory(config);
     }
 
-//    @Bean
-//    public ReactiveTransactionManager transactionManager(MssqlConnectionFactory connectionFactory) {
-//        return new R2dbcTransactionManager(connectionFactory);
-//    }
+    @Bean
+    public ReactiveTransactionManager transactionManager(MssqlConnectionFactory connectionFactory) {
+        return new R2dbcTransactionManager(connectionFactory);
+    }
 
     public String getPassword(String secret) {
         String password = "";

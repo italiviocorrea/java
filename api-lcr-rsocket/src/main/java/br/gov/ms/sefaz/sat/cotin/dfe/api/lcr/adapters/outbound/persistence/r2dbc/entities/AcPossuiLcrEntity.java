@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(value = "dfe_ac_possui_lcr")
+@Table(value = "ac_possui_lcr")
 public class AcPossuiLcrEntity implements Serializable {
 
     Integer iditc;

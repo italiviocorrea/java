@@ -10,7 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(value = "dfe_autoridade_certificadora")
+@Table(value = "autoridade_certificadora")
 public class AutoridadeCertificadoraEntity {
 
     @Id

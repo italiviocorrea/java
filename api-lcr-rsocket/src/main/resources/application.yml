@@ -4,12 +4,12 @@ app:
     path: ${user.home}/docker/secrets/
   tpAmb: 2
   database:
-    dfeProducao:
-      name: dfe_producao
+    lcrdb:
+      name: lcr_db
       host: localhost
       port: 1433
       username: sa
-      password: db-local-dfeproducao
+      password: db-local-lcr
 logging:
   level:
     org:

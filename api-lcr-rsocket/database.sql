@@ -1,9 +1,9 @@
 -- Cria o banco de dados
-CREATE DATABASE dfe_producao;
+CREATE DATABASE lcr_db;
 GO
-USE dfe_producao;
+USE lcr_db;
 
-create table dfe_autoridade_certificadora
+create table autoridade_certificadora
 (
     idItc int identity
         primary key,
@@ -12,7 +12,7 @@ create table dfe_autoridade_certificadora
 )
 go
 
-create table dfe_lista_certificado_revogado
+create table lista_certificado_revogado
 (
     idLcr                       int identity
         primary key,
@@ -26,18 +26,18 @@ create table dfe_lista_certificado_revogado
 )
 go
 
-create unique index UQ_info_url_lcr on dfe_lista_certificado_revogado (info_url_lcr) include (idLcr)
+create unique index UQ_info_url_lcr on lista_certificado_revogado (info_url_lcr) include (idLcr)
 go
 
-grant select on dfe_lista_certificado_revogado to sa
+grant select on lista_certificado_revogado to sa
 go
 
 -- auto-generated definition
-create table dfe_certificado_revogado
+create table certificado_revogado
 (
     idLcr        int          not null
         constraint FK_CRR_PERTENCE_LCR
-            references dfe_lista_certificado_revogado
+            references lista_certificado_revogado
             on delete cascade,
     idCrr        int identity
         primary key,
@@ -45,38 +45,38 @@ create table dfe_certificado_revogado
 )
 go
 
-create index IX_numero_serie on dfe_certificado_revogado (numero_serie) include (idLcr)
+create index IX_numero_serie on certificado_revogado (numero_serie) include (idLcr)
 go
 
 create index IX_idLcr
-    on dfe_certificado_revogado (idLcr)
+    on certificado_revogado (idLcr)
 go
 
-create unique index IX_serie_idLcr on dfe_certificado_revogado (idLcr, numero_serie)
+create unique index IX_serie_idLcr on certificado_revogado (idLcr, numero_serie)
 go
 
-create index IX_serie on dfe_certificado_revogado (numero_serie)
+create index IX_serie on certificado_revogado (numero_serie)
 go
 
-grant select on dfe_certificado_revogado to sa
+grant select on certificado_revogado to sa
 go
 
-create table dfe_ac_possui_lcr
+create table ac_possui_lcr
 (
     idItc int not null
         constraint FK_ACL_POSSUI_ATC
-            references dfe_autoridade_certificadora
+            references autoridade_certificadora
             on delete cascade,
     idLcr int not null
         constraint FK_ACL_POSSUI_LCR
-            references dfe_lista_certificado_revogado
+            references lista_certificado_revogado
             on delete cascade,
     primary key (idLcr, idItc)
 )
 go
 
-create index IX_idItc on dfe_ac_possui_lcr (idItc)
+create index IX_idItc on ac_possui_lcr (idItc)
 go
 
-insert into dfe_autoridade_certificadora(alias, nome) values ('ac_soluti_v5','AC SOLUTI Multipla v5')
+insert into autoridade_certificadora(alias, nome) values ('ac_soluti_v5','AC SOLUTI Multipla v5')
 go
