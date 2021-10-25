@@ -54,6 +54,6 @@ As seguintes ferramentas foram utilizadas na construção desta API:
 
     ```./mvnw spring-boot:run```
 
-## Envidando uma requisição via cliente rsocket (rsc)
+## 🚀 Enviando uma requisição via cliente rsocket (rsc)
 
 ```java -jar rsc-0.6.1.jar --request --route=api-lcr.incluir --debug tcp://localhost:7000 -d '{"nomeAC":"AC SOLUTI Multipla v5","urlLcr":"http://ccd.acsoluti.com.br/lcr/ac-soluti-multipla-v5.crl","indiLcrDelta":0,"indiAtualzLcr":"S"}'```
