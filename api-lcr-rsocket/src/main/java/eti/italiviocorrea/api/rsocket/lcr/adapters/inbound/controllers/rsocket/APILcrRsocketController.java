@@ -1,9 +1,9 @@
-package eti.italiviocorrea.api.rsocket.lcr.adapters.inbound.controllers;
+package eti.italiviocorrea.api.rsocket.lcr.adapters.inbound.controllers.rsocket;
 
+import eti.italiviocorrea.api.rsocket.lcr.adapters.inbound.controllers.IAPILcrController;
+import eti.italiviocorrea.api.rsocket.lcr.adapters.inbound.dtos.RequisicaoDTO;
+import eti.italiviocorrea.api.rsocket.lcr.adapters.inbound.dtos.RespostaDTO;
 import eti.italiviocorrea.api.rsocket.lcr.application.ports.inboud.ListaCertificadoRevogadoUseCasePort;
-import br.gov.ms.sefaz.sat.cotin.dfe.core.rsocket.lcr.inbound.dtos.RequisicaoDTO;
-import br.gov.ms.sefaz.sat.cotin.dfe.core.rsocket.lcr.inbound.dtos.RespostaDTO;
-import br.gov.ms.sefaz.sat.cotin.dfe.core.rsocket.lcr.inbound.rsocket.APILcrRSocketEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Mono;
 
 @Controller
-public class APILcrController implements APILcrRSocketEndpoint {
+public class APILcrRsocketController implements IAPILcrController {
 
     @Autowired
     ListaCertificadoRevogadoUseCasePort listaCertificadoRevogadoUseCasePort;
 
     @Override
-    @MessageMapping("dfe-lcr.incluir")
+    @MessageMapping("api-lcr.incluir")
     public Mono<RespostaDTO> incluirlcr(@Payload RequisicaoDTO requisicaoDTO) {
         return listaCertificadoRevogadoUseCasePort
                 .incluirLcr(
