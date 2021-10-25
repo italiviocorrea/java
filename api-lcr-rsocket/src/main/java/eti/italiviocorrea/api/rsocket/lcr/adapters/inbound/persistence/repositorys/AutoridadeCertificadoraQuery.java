@@ -1,8 +1,8 @@
-package eti.italiviocorrea.api.rsocket.lcr.adapters.outbound.persistence.repositorys;
+package eti.italiviocorrea.api.rsocket.lcr.adapters.inbound.persistence.repositorys;
 
-import eti.italiviocorrea.api.rsocket.lcr.adapters.outbound.persistence.r2dbc.MssqlAutoridadeCertificadoraRepository;
+import eti.italiviocorrea.api.rsocket.lcr.adapters.inbound.persistence.r2dbc.MssqlAutoridadeCertificadoraRepository;
 import eti.italiviocorrea.api.rsocket.lcr.application.domain.AutoridadeCertificadora;
-import eti.italiviocorrea.api.rsocket.lcr.application.ports.outbound.AutoridadeCertificadoraRepositoryPort;
+import eti.italiviocorrea.api.rsocket.lcr.application.ports.inboud.AutoridadeCertificadoraQueryPort;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -11,12 +11,12 @@ import reactor.core.publisher.Mono;
 
 @Component
 @Primary
-public class AutoridadeCertificadoraRepository implements AutoridadeCertificadoraRepositoryPort {
+public class AutoridadeCertificadoraQuery implements AutoridadeCertificadoraQueryPort {
 
 
     private final MssqlAutoridadeCertificadoraRepository repository;
 
-    public AutoridadeCertificadoraRepository(MssqlAutoridadeCertificadoraRepository repository) {
+    public AutoridadeCertificadoraQuery(MssqlAutoridadeCertificadoraRepository repository) {
         this.repository = repository;
     }
 

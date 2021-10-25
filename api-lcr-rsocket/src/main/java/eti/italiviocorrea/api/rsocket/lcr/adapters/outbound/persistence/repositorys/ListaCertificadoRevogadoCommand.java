@@ -3,7 +3,7 @@ package eti.italiviocorrea.api.rsocket.lcr.adapters.outbound.persistence.reposit
 import eti.italiviocorrea.api.rsocket.lcr.adapters.outbound.persistence.r2dbc.MssqlListaCertificadoRevogadoRepository;
 import eti.italiviocorrea.api.rsocket.lcr.adapters.outbound.persistence.r2dbc.entities.ListaCertificadoRevogadoEntity;
 import eti.italiviocorrea.api.rsocket.lcr.application.domain.ListaCertificadoRevogado;
-import eti.italiviocorrea.api.rsocket.lcr.application.ports.outbound.ListaCertificadoRevogadoRepositoryPort;
+import eti.italiviocorrea.api.rsocket.lcr.application.ports.outbound.ListaCertificadoRevogadoCommandPort;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -12,12 +12,12 @@ import reactor.core.publisher.Mono;
 
 @Component
 @Primary
-public class ListaCertificadoRevogadoRepository implements ListaCertificadoRevogadoRepositoryPort {
+public class ListaCertificadoRevogadoCommand implements ListaCertificadoRevogadoCommandPort {
 
     private final MssqlListaCertificadoRevogadoRepository repository;
 
 
-    public ListaCertificadoRevogadoRepository(MssqlListaCertificadoRevogadoRepository repository) {
+    public ListaCertificadoRevogadoCommand(MssqlListaCertificadoRevogadoRepository repository) {
         this.repository = repository;
     }
 

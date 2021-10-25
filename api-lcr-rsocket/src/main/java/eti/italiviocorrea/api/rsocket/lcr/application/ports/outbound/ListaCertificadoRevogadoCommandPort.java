@@ -3,7 +3,7 @@ package eti.italiviocorrea.api.rsocket.lcr.application.ports.outbound;
 import eti.italiviocorrea.api.rsocket.lcr.application.domain.ListaCertificadoRevogado;
 import reactor.core.publisher.Mono;
 
-public interface ListaCertificadoRevogadoRepositoryPort {
+public interface ListaCertificadoRevogadoCommandPort {
 
     Mono<ListaCertificadoRevogado> findStatusListaByUrl(String url);
 

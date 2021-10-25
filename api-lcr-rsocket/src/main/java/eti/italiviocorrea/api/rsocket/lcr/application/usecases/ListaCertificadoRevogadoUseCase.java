@@ -4,21 +4,21 @@ import eti.italiviocorrea.api.rsocket.lcr.application.domain.AcPossuiLcr;
 import eti.italiviocorrea.api.rsocket.lcr.application.domain.AutoridadeCertificadora;
 import eti.italiviocorrea.api.rsocket.lcr.application.domain.ListaCertificadoRevogado;
 import eti.italiviocorrea.api.rsocket.lcr.application.ports.inboud.ListaCertificadoRevogadoUseCasePort;
-import eti.italiviocorrea.api.rsocket.lcr.application.ports.outbound.AcPossuiLcrRepositoryPort;
-import eti.italiviocorrea.api.rsocket.lcr.application.ports.outbound.AutoridadeCertificadoraRepositoryPort;
-import eti.italiviocorrea.api.rsocket.lcr.application.ports.outbound.ListaCertificadoRevogadoRepositoryPort;
+import eti.italiviocorrea.api.rsocket.lcr.application.ports.outbound.AcPossuiLcrCommandPort;
+import eti.italiviocorrea.api.rsocket.lcr.application.ports.inboud.AutoridadeCertificadoraQueryPort;
+import eti.italiviocorrea.api.rsocket.lcr.application.ports.outbound.ListaCertificadoRevogadoCommandPort;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 public class ListaCertificadoRevogadoUseCase implements ListaCertificadoRevogadoUseCasePort {
 
-    private final AutoridadeCertificadoraRepositoryPort acRepository;
-    private final ListaCertificadoRevogadoRepositoryPort lcrRepository;
-    private final AcPossuiLcrRepositoryPort acPossuiLcrRepository;
+    private final AutoridadeCertificadoraQueryPort acRepository;
+    private final ListaCertificadoRevogadoCommandPort lcrRepository;
+    private final AcPossuiLcrCommandPort acPossuiLcrRepository;
 
-    public ListaCertificadoRevogadoUseCase(AutoridadeCertificadoraRepositoryPort acRepository,
-                                           ListaCertificadoRevogadoRepositoryPort lcrRepository,
-                                           AcPossuiLcrRepositoryPort acPossuiLcrRepository) {
+    public ListaCertificadoRevogadoUseCase(AutoridadeCertificadoraQueryPort acRepository,
+                                           ListaCertificadoRevogadoCommandPort lcrRepository,
+                                           AcPossuiLcrCommandPort acPossuiLcrRepository) {
         this.acRepository = acRepository;
         this.lcrRepository = lcrRepository;
         this.acPossuiLcrRepository = acPossuiLcrRepository;

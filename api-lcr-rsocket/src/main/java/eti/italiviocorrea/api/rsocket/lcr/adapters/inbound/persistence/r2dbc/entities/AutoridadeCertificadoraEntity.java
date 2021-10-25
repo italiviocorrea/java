@@ -1,4 +1,4 @@
-package eti.italiviocorrea.api.rsocket.lcr.adapters.outbound.persistence.r2dbc.entities;
+package eti.italiviocorrea.api.rsocket.lcr.adapters.inbound.persistence.r2dbc.entities;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
