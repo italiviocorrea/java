@@ -5,13 +5,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Builder
 @Table(value = "lista_certificado_revogado")
-public class ListaCertificadoRevogadoEntity {
+public class ListaCertificadoRevogadoEntity implements Serializable {
 
     @Id
     @Column("idlcr")
