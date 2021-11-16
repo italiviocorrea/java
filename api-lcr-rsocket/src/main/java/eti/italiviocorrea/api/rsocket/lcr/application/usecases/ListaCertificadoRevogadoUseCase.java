@@ -3,10 +3,11 @@ package eti.italiviocorrea.api.rsocket.lcr.application.usecases;
 import eti.italiviocorrea.api.rsocket.lcr.application.domain.AcPossuiLcr;
 import eti.italiviocorrea.api.rsocket.lcr.application.domain.AutoridadeCertificadora;
 import eti.italiviocorrea.api.rsocket.lcr.application.domain.ListaCertificadoRevogado;
+import eti.italiviocorrea.api.rsocket.lcr.application.ports.inboud.AutoridadeCertificadoraQueryPort;
 import eti.italiviocorrea.api.rsocket.lcr.application.ports.inboud.ListaCertificadoRevogadoUseCasePort;
 import eti.italiviocorrea.api.rsocket.lcr.application.ports.outbound.AcPossuiLcrCommandPort;
-import eti.italiviocorrea.api.rsocket.lcr.application.ports.inboud.AutoridadeCertificadoraQueryPort;
 import eti.italiviocorrea.api.rsocket.lcr.application.ports.outbound.ListaCertificadoRevogadoCommandPort;
+import io.opentelemetry.extension.annotations.WithSpan;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
@@ -24,6 +25,7 @@ public class ListaCertificadoRevogadoUseCase implements ListaCertificadoRevogado
         this.acPossuiLcrRepository = acPossuiLcrRepository;
     }
 
+    @WithSpan
     @Transactional
     @Override
     public Mono<Void> incluirLcr(String nomeAC, String urlLcr) {

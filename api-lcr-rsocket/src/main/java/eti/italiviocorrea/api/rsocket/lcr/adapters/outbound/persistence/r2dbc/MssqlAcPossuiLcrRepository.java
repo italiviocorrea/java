@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 public interface MssqlAcPossuiLcrRepository extends ReactiveCrudRepository<AcPossuiLcrEntity, AcPossuiLcrPk> {
 
     @Modifying
-    @Query("insert into dfe_ac_possui_lcr(iditc,idlcr) values(:iditc,:idlcr)")
+    @Query("insert into ac_possui_lcr(iditc,idlcr) values(:iditc,:idlcr)")
     Mono<Void> inserirAcPossuiLcr(Integer iditc, Integer idlcr);
 
 }

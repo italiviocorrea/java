@@ -24,7 +24,8 @@ class ApiLcrApplicationTests {
     @BeforeAll
     public static void setupOnce(@Autowired RSocketRequester.Builder builder) {
 
-        Hooks.onErrorDropped(throwable -> {});
+        Hooks.onErrorDropped(throwable -> {
+        });
 
         requester = builder
                 .rsocketConnector(rSocketConnector -> rSocketConnector
@@ -90,5 +91,6 @@ class ApiLcrApplicationTests {
                 .expectNextMatches(autoridadeCertificadora -> autoridadeCertificadora.equals(ac))
                 .verifyComplete();
     }
+
 
 }

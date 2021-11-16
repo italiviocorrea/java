@@ -11,18 +11,18 @@ public interface MssqlListaCertificadoRevogadoRepository
 
 //    @CircuitBreaker(name = "nf3edb")
     @Query("select idlcr as id, indi_lcr_delta as indiLcrDelta"
-            + " from dfe_lista_certificado_revogado"
+            + " from lista_certificado_revogado"
             + " where info_url_lcr =  :infoUrlLcr")
     Mono<ListaCertificadoRevogadoEntity> findStatusListaByUrl(@Param("infoUrlLcr") String url);
 
 //    @CircuitBreaker(name = "nf3edb")
     @Query(" select idlcr as id"
-            + "  from dfe_lista_certificado_revogado"
+            + "  from lista_certificado_revogado"
             + "  where  info_url_lcr =  :infoUrlLcr"
             + "    and Exists (select 1 "
-            + "                 from dfe_certificado_revogado"
+            + "                 from certificado_revogado"
             + "                 where numero_serie =  :numeroSerie"
-            + "                   and idLcr = dfe_lista_certificado_revogado.idlcr)")
+            + "                   and idLcr = lista_certificado_revogado.idlcr)")
     Mono<ListaCertificadoRevogadoEntity> findByUrlESerialNumber(
             @Param("infoUrlLcr") String url,
             @Param("numeroSerie") String serialNumber);

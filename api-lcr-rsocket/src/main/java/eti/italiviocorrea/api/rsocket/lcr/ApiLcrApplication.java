@@ -2,7 +2,6 @@ package eti.italiviocorrea.api.rsocket.lcr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import reactor.blockhound.BlockHound;
 import reactor.core.publisher.Hooks;
 
 @SpringBootApplication

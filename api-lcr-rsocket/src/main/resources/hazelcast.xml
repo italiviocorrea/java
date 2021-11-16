@@ -9,5 +9,15 @@
         <max-idle-seconds>1800</max-idle-seconds>
         <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="1000"/>
     </map>
+    <map name="certValidos">
+        <time-to-live-seconds>120</time-to-live-seconds>
+        <max-idle-seconds>60</max-idle-seconds>
+        <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="1000"/>
+    </map>
+    <map name="certInvalidos">
+        <time-to-live-seconds>120</time-to-live-seconds>
+        <max-idle-seconds>60</max-idle-seconds>
+        <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="1000"/>
+    </map>
     <management-center />
 </hazelcast>

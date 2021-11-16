@@ -17,4 +17,6 @@ public class RequisicaoDTO implements Serializable {
     String urlLcr;
     Integer indiLcrDelta;
     String indiAtualzLcr;
+    String certificado;
+
 }

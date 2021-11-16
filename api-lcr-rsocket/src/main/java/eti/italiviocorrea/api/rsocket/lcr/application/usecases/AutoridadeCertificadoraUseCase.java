@@ -4,6 +4,7 @@ import com.hazelcast.map.IMap;
 import eti.italiviocorrea.api.rsocket.lcr.application.domain.AutoridadeCertificadora;
 import eti.italiviocorrea.api.rsocket.lcr.application.ports.inboud.AutoridadeCertificadoraQueryPort;
 import eti.italiviocorrea.api.rsocket.lcr.application.ports.inboud.AutoridadeCertificadoraUseCasePort;
+import io.opentelemetry.extension.annotations.WithSpan;
 import reactor.core.publisher.Mono;
 import reactor.util.Logger;
 import reactor.util.Loggers;
@@ -21,6 +22,7 @@ public class AutoridadeCertificadoraUseCase implements AutoridadeCertificadoraUs
         this.acRepository = acRepository;
     }
 
+    @WithSpan
     @Override
     public Mono<AutoridadeCertificadora> buscarPorNome(String nome) {
         return Mono.fromCompletionStage(() -> cache.getAsync(nome))
