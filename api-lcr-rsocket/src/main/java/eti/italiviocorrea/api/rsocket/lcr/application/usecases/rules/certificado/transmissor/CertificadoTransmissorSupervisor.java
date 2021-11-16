@@ -83,7 +83,7 @@ public class CertificadoTransmissorSupervisor {
             futuresRnTransmissor.add(CompletableFuture.supplyAsync(new RnA04Rej286(dadosCertificado, cacheInvalido,listaCertificadoRevogadoRepository)));
 
             CompletableFuture.allOf(futuresRnTransmissor.toArray(new CompletableFuture[0])).thenAcceptAsync(result -> {
-                respostas.addAll(futuresRnTransmissor.parallelStream().map(CompletableFuture::join).collect(Collectors.toSet()));
+                respostas.addAll(futuresRnTransmissor.stream().map(CompletableFuture::join).collect(Collectors.toSet()));
             },cachedThreadPool).join();
 
 
