@@ -128,10 +128,9 @@ public class CertificadoTransmissorSupervisor {
         Mono<RespostaValidacao> rnA02Rej281 = Mono.defer(() -> Mono.just(new RnA02Rej281(dadosCertificado, cacheInvalido).get())).subscribeOn(parallel);
         Mono<RespostaValidacao> rnA07Rej282 = Mono.defer(() -> Mono.just(new RnA07Rej282(dadosCertificado, cacheInvalido).get())).subscribeOn(parallel);
         Mono<RespostaValidacao> rnA06Rej285 = Mono.defer(() -> Mono.just(new RnA06Rej285(dadosCertificado, cacheInvalido).get())).subscribeOn(parallel);
-        Mono<RespostaValidacao> rnA03Rej283 = Mono.defer(() -> Mono.just(new RnA03Rej283(dadosCertificado, cacheInvalido, autoridadeCertificadoraRepository).get())).subscribeOn(boundedElastic);
-        Mono<RespostaValidacao> rnA05Rej284 = Mono.defer(() -> Mono.just(new RnA05Rej284(dadosCertificado, cacheInvalido, listaCertificadoRevogadoRepository).get())).subscribeOn(boundedElastic);
-        Mono<RespostaValidacao> rnA04Rej286 = Mono.defer(() -> Mono.just(new RnA04Rej286(dadosCertificado, cacheInvalido, listaCertificadoRevogadoRepository).get())).subscribeOn(boundedElastic);
-
+        Mono<RespostaValidacao> rnA03Rej283 = Mono.defer(() -> new RnA03Rej283Mono(dadosCertificado, cacheInvalido, autoridadeCertificadoraRepository).get()).subscribeOn(parallel);
+        Mono<RespostaValidacao> rnA05Rej284 = Mono.defer(() -> new RnA05Rej284Mono(dadosCertificado, cacheInvalido, listaCertificadoRevogadoRepository).get()).subscribeOn(parallel);
+        Mono<RespostaValidacao> rnA04Rej286 = Mono.defer(() -> new RnA04Rej286Mono(dadosCertificado, cacheInvalido, listaCertificadoRevogadoRepository).get()).subscribeOn(parallel);
 
         return Flux.concat(rnA02Rej281, rnA07Rej282, rnA06Rej285, rnA03Rej283, rnA05Rej284, rnA04Rej286)
                 .publishOn(Schedulers.boundedElastic())

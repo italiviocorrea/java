@@ -74,7 +74,8 @@ public class APILcrRsocketController implements IAPILcrController {
     @WithSpan
     @MessageMapping("api-lcr.validar.certificado.transmissor")
     public Mono<RespostaDTO> validar(@Payload RequisicaoDTO requisicaoDTO) {
-        return validarMultiplos(requisicaoDTO.getCertificado(), 3);
+        return validarMultiplos(requisicaoDTO.getCertificado(), 1);
+//        return validarMultiplos(requisicaoDTO.getCertificado(), 3).subscribeOn(Schedulers.newParallel("rnA"));
     }
 
     /**
@@ -106,8 +107,9 @@ public class APILcrRsocketController implements IAPILcrController {
     private Mono<RespostaDTO> validarMultiplos(String certificado, int size) {
         return Mono.just(gerarListaCertificado(certificado, size))
                 .flatMapMany(Flux::fromIterable)
-                .flatMap(s -> Mono.defer(() -> validarCertificadoTransmissorHibrido(s))
+                .flatMap(s -> Mono.defer(() -> validarCertificadoTransmissorMono(s))
                         .subscribeOn(Schedulers.boundedElastic()))
+//                .flatMapDelayError(s -> validarCertificadoTransmissorHibrido(s).subscribeOn(Schedulers.boundedElastic()),256,32)
                 .collectList()
                 .flatMap(respostas -> {
                     if (respostas.size() > 1) {
@@ -123,7 +125,8 @@ public class APILcrRsocketController implements IAPILcrController {
                             .cStatus(respostaValidacao.getCStat())
                             .xMotivo(respostaValidacao.getXMotivo())
                             .build());
-                }).log();
+                })
+                .log();
     }
 
     private List<String> gerarListaCertificado(String certificado, int size) {
