@@ -74,7 +74,7 @@ public class APILcrRsocketController implements IAPILcrController {
     @WithSpan
     @MessageMapping("api-lcr.validar.certificado.transmissor")
     public Mono<RespostaDTO> validar(@Payload RequisicaoDTO requisicaoDTO) {
-        return validarMultiplos(requisicaoDTO.getCertificado(), 1);
+        return validarMultiplos(requisicaoDTO.getCertificado(), 3);
 //        return validarMultiplos(requisicaoDTO.getCertificado(), 3).subscribeOn(Schedulers.newParallel("rnA"));
     }
 
@@ -87,8 +87,8 @@ public class APILcrRsocketController implements IAPILcrController {
     private Mono<RespostaDTO> validarOne(String certificado) {
         return Mono.just(certificado)
                 .publishOn(Schedulers.boundedElastic())
-                .map(s -> {
-                    RespostaValidacao resp = validarCertificadoTransmissor(s);
+                .map(cert -> {
+                    RespostaValidacao resp = validarCertificadoTransmissor(cert);
                     return RespostaDTO.builder()
                             .cStatus(resp.getCStat())
                             .xMotivo(resp.getXMotivo())

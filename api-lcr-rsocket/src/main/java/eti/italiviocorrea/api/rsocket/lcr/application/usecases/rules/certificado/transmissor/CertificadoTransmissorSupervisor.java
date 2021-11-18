@@ -86,9 +86,14 @@ public class CertificadoTransmissorSupervisor {
             futuresRnTransmissor.add(CompletableFuture.supplyAsync(new RnA06Rej285(dadosCertificado, cacheInvalido)));
             futuresRnTransmissor.add(CompletableFuture.supplyAsync(new RnA04Rej286(dadosCertificado, cacheInvalido, listaCertificadoRevogadoRepository)));
 
-            CompletableFuture.allOf(futuresRnTransmissor.toArray(new CompletableFuture[0])).thenAcceptAsync(result -> {
-                respostas.addAll(futuresRnTransmissor.stream().map(CompletableFuture::join).collect(Collectors.toSet()));
-            }, cachedThreadPool).join();
+            CompletableFuture
+                    .allOf(futuresRnTransmissor.toArray(new CompletableFuture[0]))
+                    .thenAcceptAsync(result -> {
+                        respostas.addAll(futuresRnTransmissor
+                                .stream()
+                                .map(CompletableFuture::join)
+                                .collect(Collectors.toSet()));
+                    }, cachedThreadPool).join();
 
 
             LOGGER.info("Respostas : " + respostas.toString());
@@ -128,6 +133,7 @@ public class CertificadoTransmissorSupervisor {
         Mono<RespostaValidacao> rnA02Rej281 = Mono.defer(() -> Mono.just(new RnA02Rej281(dadosCertificado, cacheInvalido).get())).subscribeOn(parallel);
         Mono<RespostaValidacao> rnA07Rej282 = Mono.defer(() -> Mono.just(new RnA07Rej282(dadosCertificado, cacheInvalido).get())).subscribeOn(parallel);
         Mono<RespostaValidacao> rnA06Rej285 = Mono.defer(() -> Mono.just(new RnA06Rej285(dadosCertificado, cacheInvalido).get())).subscribeOn(parallel);
+
         Mono<RespostaValidacao> rnA03Rej283 = Mono.defer(() -> new RnA03Rej283Mono(dadosCertificado, cacheInvalido, autoridadeCertificadoraRepository).get()).subscribeOn(parallel);
         Mono<RespostaValidacao> rnA05Rej284 = Mono.defer(() -> new RnA05Rej284Mono(dadosCertificado, cacheInvalido, listaCertificadoRevogadoRepository).get()).subscribeOn(parallel);
         Mono<RespostaValidacao> rnA04Rej286 = Mono.defer(() -> new RnA04Rej286Mono(dadosCertificado, cacheInvalido, listaCertificadoRevogadoRepository).get()).subscribeOn(parallel);
