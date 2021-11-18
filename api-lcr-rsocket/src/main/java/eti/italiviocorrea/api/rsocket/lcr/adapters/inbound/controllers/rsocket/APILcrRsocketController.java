@@ -106,7 +106,7 @@ public class APILcrRsocketController implements IAPILcrController {
     private Mono<RespostaDTO> validarMultiplos(String certificado, int size) {
         return Mono.just(gerarListaCertificado(certificado, size))
                 .flatMapMany(Flux::fromIterable)
-                .flatMap(s -> Mono.defer(() -> validarCertificadoTransmissorMono(s))
+                .flatMap(s -> Mono.defer(() -> validarCertificadoTransmissorHibrido(s))
                         .subscribeOn(Schedulers.boundedElastic()))
                 .collectList()
                 .flatMap(respostas -> {
@@ -192,7 +192,7 @@ public class APILcrRsocketController implements IAPILcrController {
      * @param certificados
      * @return
      */
-    private Mono<RespostaValidacao> validarCertificadoTransmissorMono(String certificados) {
+    private Mono<RespostaValidacao> validarCertificadoTransmissorHibrido(String certificados) {
 
         return Mono.fromFuture(certificadoTransmissorSupervisor.validar(getDadosCertificado(certificados)))
                 .subscribeOn(Schedulers.boundedElastic())
@@ -210,7 +210,7 @@ public class APILcrRsocketController implements IAPILcrController {
                 });
     }
 
-    private Mono<RespostaValidacao> validarCertificadoTransmissorMono2(String certificados) {
+    private Mono<RespostaValidacao> validarCertificadoTransmissorMono(String certificados) {
 
         return certificadoTransmissorSupervisor.validarMono(getDadosCertificado(certificados))
                 .subscribeOn(Schedulers.boundedElastic())
