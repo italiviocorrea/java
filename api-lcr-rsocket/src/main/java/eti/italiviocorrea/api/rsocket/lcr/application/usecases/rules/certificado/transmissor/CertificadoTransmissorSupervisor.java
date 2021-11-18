@@ -7,6 +7,10 @@ import eti.italiviocorrea.api.rsocket.lcr.application.domain.ResultadoProcessame
 import eti.italiviocorrea.api.rsocket.lcr.application.ports.inboud.AutoridadeCertificadoraQueryPort;
 import eti.italiviocorrea.api.rsocket.lcr.application.ports.outbound.ListaCertificadoRevogadoCommandPort;
 import io.opentelemetry.extension.annotations.WithSpan;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 import reactor.util.Loggers;
 
 import java.security.cert.X509Certificate;
@@ -77,14 +81,14 @@ public class CertificadoTransmissorSupervisor {
 
             futuresRnTransmissor.add(CompletableFuture.supplyAsync(new RnA02Rej281(dadosCertificado, cacheInvalido)));
             futuresRnTransmissor.add(CompletableFuture.supplyAsync(new RnA07Rej282(dadosCertificado, cacheInvalido)));
-            futuresRnTransmissor.add(CompletableFuture.supplyAsync(new RnA03Rej283(dadosCertificado, cacheInvalido,autoridadeCertificadoraRepository)));
-            futuresRnTransmissor.add(CompletableFuture.supplyAsync(new RnA05Rej284(dadosCertificado, cacheInvalido,listaCertificadoRevogadoRepository)));
+            futuresRnTransmissor.add(CompletableFuture.supplyAsync(new RnA03Rej283(dadosCertificado, cacheInvalido, autoridadeCertificadoraRepository)));
+            futuresRnTransmissor.add(CompletableFuture.supplyAsync(new RnA05Rej284(dadosCertificado, cacheInvalido, listaCertificadoRevogadoRepository)));
             futuresRnTransmissor.add(CompletableFuture.supplyAsync(new RnA06Rej285(dadosCertificado, cacheInvalido)));
-            futuresRnTransmissor.add(CompletableFuture.supplyAsync(new RnA04Rej286(dadosCertificado, cacheInvalido,listaCertificadoRevogadoRepository)));
+            futuresRnTransmissor.add(CompletableFuture.supplyAsync(new RnA04Rej286(dadosCertificado, cacheInvalido, listaCertificadoRevogadoRepository)));
 
             CompletableFuture.allOf(futuresRnTransmissor.toArray(new CompletableFuture[0])).thenAcceptAsync(result -> {
                 respostas.addAll(futuresRnTransmissor.stream().map(CompletableFuture::join).collect(Collectors.toSet()));
-            },cachedThreadPool).join();
+            }, cachedThreadPool).join();
 
 
             LOGGER.info("Respostas : " + respostas.toString());
@@ -94,6 +98,51 @@ public class CertificadoTransmissorSupervisor {
             }
             return respostas;
         });
+    }
+
+    @WithSpan
+    public Mono<Set<RespostaValidacao>> validarMono(DadosCertificado dadosCertificado) {
+
+        Scheduler boundedElastic = Schedulers.boundedElastic();
+        Scheduler parallel = Schedulers.parallel();
+
+        Set<RespostaValidacao> respostas = new HashSet<>();
+
+        if (isCacheValido(dadosCertificado)) {
+            respostas.add(RespostaValidacao.respOk());
+            return Mono.just(respostas);
+        }
+
+        if (isCacheInvalido(dadosCertificado)) {
+            respostas.add(RespostaValidacao.builder().cStat(ResultadoProcessamento.RP_280.getCStat())
+                    .xMotivo(ResultadoProcessamento.RP_280.getXMotivo()).build());
+            return Mono.just(respostas);
+        }
+
+        RespostaValidacao respRnA01Rej280 = new RnA01Rej280(dadosCertificado, cacheInvalido).get();
+        if (respRnA01Rej280.isRejeicao()) {
+            respostas.add(respRnA01Rej280);
+            return Mono.just(respostas);
+        }
+
+        Mono<RespostaValidacao> rnA02Rej281 = Mono.defer(() -> Mono.just(new RnA02Rej281(dadosCertificado, cacheInvalido).get())).subscribeOn(parallel);
+        Mono<RespostaValidacao> rnA07Rej282 = Mono.defer(() -> Mono.just(new RnA07Rej282(dadosCertificado, cacheInvalido).get())).subscribeOn(parallel);
+        Mono<RespostaValidacao> rnA06Rej285 = Mono.defer(() -> Mono.just(new RnA06Rej285(dadosCertificado, cacheInvalido).get())).subscribeOn(parallel);
+        Mono<RespostaValidacao> rnA03Rej283 = Mono.defer(() -> Mono.just(new RnA03Rej283(dadosCertificado, cacheInvalido, autoridadeCertificadoraRepository).get())).subscribeOn(boundedElastic);
+        Mono<RespostaValidacao> rnA05Rej284 = Mono.defer(() -> Mono.just(new RnA05Rej284(dadosCertificado, cacheInvalido, listaCertificadoRevogadoRepository).get())).subscribeOn(boundedElastic);
+        Mono<RespostaValidacao> rnA04Rej286 = Mono.defer(() -> Mono.just(new RnA04Rej286(dadosCertificado, cacheInvalido, listaCertificadoRevogadoRepository).get())).subscribeOn(boundedElastic);
+
+
+        return Flux.concat(rnA02Rej281, rnA07Rej282, rnA06Rej285, rnA03Rej283, rnA05Rej284, rnA04Rej286)
+                .publishOn(Schedulers.boundedElastic())
+                .collectList()
+                .flatMap(respostaValidacaos -> {
+                    if (respostaValidacaos.size() == 1 && respostaValidacaos.contains(RespostaValidacao.respOk())) {
+                        cacheValido.put(dadosCertificado.getCertificate(), dadosCertificado.getCertificate());
+                    }
+                    return Mono.just(respostaValidacaos);
+                }).map(respostaValidacaos -> respostaValidacaos.parallelStream().collect(Collectors.toSet()));
+
     }
 
     private boolean isCacheValido(DadosCertificado dadosCertificado) {
