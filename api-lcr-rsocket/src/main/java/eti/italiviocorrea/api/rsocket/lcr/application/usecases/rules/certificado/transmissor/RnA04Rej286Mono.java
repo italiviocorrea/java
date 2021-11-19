@@ -36,6 +36,36 @@ public class RnA04Rej286Mono implements Supplier<Mono<RespostaValidacao>> {
     @Override
     public Mono<RespostaValidacao> get() {
 
+//        if (ObjectUtils.isEmpty(dadosCertificado)
+//                || ObjectUtils.isEmpty(repository)
+//                || ObjectUtils.isEmpty(dadosCertificado.getCertificate())) {
+//            return RespostaValidacao.resp999().trace("pre requisitos da regra").className(getClass().getName());
+//        }
+//
+//        List<String> lista = dadosCertificado.getPontosDistribuicaoLCR();
+//
+//        if (ObjectUtils.isEmpty(lista)) {
+//            return inserirInvalido(dadosCertificado);
+//        }
+//
+//        RespostaValidacao resp = RespostaValidacao.builder().ok(true).cStat("100").xMotivo("OK").build();
+//
+//        lista.parallelStream().forEach(url -> {
+//
+//            ListaCertificadoRevogado listaCertificadoRevogado = repository.findStatusListaByUrl(url).block();
+//
+//            System.out.println(url);
+//
+//            if (listaCertificadoRevogado != null) {
+//                if (listaCertificadoRevogado.getIndiLcrDelta() > 0) {
+//                    resp.set(inserirInvalido(dadosCertificado));
+//                }
+//            }
+//
+//        });
+//
+//        return resp;
+
         if (ObjectUtils.isEmpty(dadosCertificado)
                 || ObjectUtils.isEmpty(repository)
                 || ObjectUtils.isEmpty(dadosCertificado.getCertificate())) {
