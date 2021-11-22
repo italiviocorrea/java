@@ -35,17 +35,17 @@ public class BeanConfiguration {
     }
 
     @Bean
-    AutoridadeCertificadoraUseCase autoridadeCertificadoraUseCase(HazelcastInstance instance,
+    AutoridadeCertificadoraUseCase autoridadeCertificadoraUseCase(HazelcastInstance hazelcastInstance,
                                                                   AutoridadeCertificadoraQueryPort autoridadeCertificadoraRepositoryPort) {
-        return new AutoridadeCertificadoraUseCase(instance.getMap("acs"), autoridadeCertificadoraRepositoryPort);
+        return new AutoridadeCertificadoraUseCase(hazelcastInstance.getMap("acs"), autoridadeCertificadoraRepositoryPort);
     }
 
     @Bean
-    CertificadoTransmissorSupervisor certificadoTransmissorSupervisor(HazelcastInstance instance, AutoridadeCertificadoraQueryPort autoridadeCertificadoraRepositoryPort,
+    CertificadoTransmissorSupervisor certificadoTransmissorSupervisor(HazelcastInstance hazelcastInstance, AutoridadeCertificadoraQueryPort autoridadeCertificadoraRepositoryPort,
                                                                       ListaCertificadoRevogadoCommandPort listaCertificadoRevogadoRepositoryPort) {
         return new CertificadoTransmissorSupervisor(
-                instance.getMap("certValidos"),
-                instance.getMap("certInvalidos"),
+                hazelcastInstance.getMap("certValidos"),
+                hazelcastInstance.getMap("certInvalidos"),
                 listaCertificadoRevogadoRepositoryPort, autoridadeCertificadoraRepositoryPort, cachedThreadPool());
     }
 

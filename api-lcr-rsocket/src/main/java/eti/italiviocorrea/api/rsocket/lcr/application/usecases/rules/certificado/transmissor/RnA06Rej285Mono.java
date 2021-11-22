@@ -28,12 +28,14 @@ public class RnA06Rej285Mono implements Supplier<Mono<RespostaValidacao>> {
     @Override
     public Mono<RespostaValidacao> get() {
 
+        if (ObjectUtils.isEmpty(dadosCertificado) || ObjectUtils.isEmpty(dadosCertificado.getCertificate())) {
+            return Mono.just(RespostaValidacao.resp999().trace("pre requisitos da regra").className(getClass().getName()));
+        }
+
         return Mono.just(dadosCertificado)
                 .flatMap(dadosCertificado1 -> {
                     try {
-                        if (ObjectUtils.isEmpty(dadosCertificado)) {
-                            return Mono.just(RespostaValidacao.resp999().trace("pre requisitos da regra").className(getClass().getName()));
-                        } else if (!ICPBrasilUtil.isIcpBrasil(new X509CertificateWrapper(dadosCertificado.getCertificate()))) {
+                        if (!ICPBrasilUtil.isIcpBrasil(new X509CertificateWrapper(dadosCertificado.getCertificate()))) {
                             cacheInvalido.put(dadosCertificado.getCertificate(), dadosCertificado.getCertificate());
                             return Mono.just(resp285);
                         }

@@ -29,10 +29,10 @@ public class RnA01Rej280Mono implements Supplier<Mono<RespostaValidacao>> {
     @Override
     public Mono<RespostaValidacao> get() {
 
-//        if (ObjectUtils.isEmpty(dadosCertificado)
-//                || ObjectUtils.isEmpty(dadosCertificado.getCertificate())) {
-//            return Mono.just(RespostaValidacao.resp999().trace("pre requisitos da regra").className(getClass().getName()));
-//        }
+        if (ObjectUtils.isEmpty(dadosCertificado)
+                || ObjectUtils.isEmpty(dadosCertificado.getCertificate())) {
+            return Mono.just(RespostaValidacao.resp999().trace("pre requisitos da regra").className(getClass().getName()));
+        }
 //
 //        if (dadosCertificado.getVersao() != 3
 //                || dadosCertificado.getBasicConstraints() == 1
@@ -45,11 +45,7 @@ public class RnA01Rej280Mono implements Supplier<Mono<RespostaValidacao>> {
 
         return Mono.just(dadosCertificado)
                 .flatMap(dadosCertificado1 -> {
-                    if( ObjectUtils.isEmpty(dadosCertificado1)
-                            || ObjectUtils.isEmpty(dadosCertificado1.getCertificate())){
-                        cacheInvalido.put(dadosCertificado.getCertificate(),dadosCertificado.getCertificate());
-                        return Mono.just(resp280);
-                    } else if (dadosCertificado.getVersao() != 3
+                    if (dadosCertificado.getVersao() != 3
                             || dadosCertificado.getBasicConstraints() == 1
                             || !dadosCertificado.getIsClientAuthentication()) {
                         cacheInvalido.put(dadosCertificado.getCertificate(),dadosCertificado.getCertificate());

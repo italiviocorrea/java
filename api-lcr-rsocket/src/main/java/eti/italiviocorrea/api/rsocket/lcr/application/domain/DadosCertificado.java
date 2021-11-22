@@ -5,6 +5,7 @@ import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.asn1.x500.style.IETFUtils;
+import reactor.util.annotation.Nullable;
 
 import javax.security.auth.x500.X500Principal;
 import java.io.Serializable;
@@ -32,6 +33,7 @@ public class DadosCertificado implements Serializable {
     private Date notBefore;
     private String c;
     private String emailAddress;
+    @Nullable
     private List<String> pontosDistribuicaoLCR;
     private X509Certificate certificate;
     private Boolean hasNonRepudiation;

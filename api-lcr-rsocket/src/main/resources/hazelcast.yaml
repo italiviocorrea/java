@@ -1,0 +1,14 @@
+hazelcast:
+  cluster-name: lcr-aut
+  instance-name: hazelcastInstance
+  group:
+    #    management-center:
+    #      enabled: true
+    #      url: 'http://localhost:8080/'
+    network:
+      join:
+        multicast:
+          enabled: true
+  map:
+    name: acs
+

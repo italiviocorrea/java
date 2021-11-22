@@ -130,8 +130,8 @@ public class CertificadoTransmissorSupervisor {
             return Mono.just(respostas);
         }
 
-        Mono<RespostaValidacao> rnA07Rej282 = Mono.defer(() -> Mono.just(new RnA07Rej282(dadosCertificado, cacheInvalido).get())).subscribeOn(parallel);
-        Mono<RespostaValidacao> rnA06Rej285 = Mono.defer(() -> Mono.just(new RnA06Rej285(dadosCertificado, cacheInvalido).get())).subscribeOn(parallel);
+        Mono<RespostaValidacao> rnA07Rej282 = Mono.defer(() -> new RnA07Rej282Mono(dadosCertificado, cacheInvalido).get()).subscribeOn(parallel);
+        Mono<RespostaValidacao> rnA06Rej285 = Mono.defer(() -> new RnA06Rej285Mono(dadosCertificado, cacheInvalido).get()).subscribeOn(parallel);
 
         Mono<RespostaValidacao> rnA02Rej281 = Mono.defer(() -> new RnA02Rej281Mono(dadosCertificado, cacheInvalido).get()).subscribeOn(parallel);
         Mono<RespostaValidacao> rnA03Rej283 = Mono.defer(() -> new RnA03Rej283Mono(dadosCertificado, cacheInvalido, autoridadeCertificadoraRepository).get()).subscribeOn(parallel);

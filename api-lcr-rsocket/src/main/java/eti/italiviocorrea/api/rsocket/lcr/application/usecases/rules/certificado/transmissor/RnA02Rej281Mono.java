@@ -43,11 +43,12 @@ public class RnA02Rej281Mono implements Supplier<Mono<RespostaValidacao>> {
 //
 //        return Mono.just(RespostaValidacao.builder().ok(true).cStat("100").xMotivo("OK").build());
 
+        if (ObjectUtils.isEmpty(certificado) || ObjectUtils.isEmpty(certificado.getCertificate())) {
+            return Mono.just(RespostaValidacao.resp999().trace("pre requisitos da regra").className(getClass().getName()));
+        }
+
         return Mono.just(certificado)
                 .flatMap(dadosCertificado -> {
-                    if (ObjectUtils.isEmpty(certificado)) {
-                        return Mono.just(RespostaValidacao.resp999().trace("pre requisitos da regra").className(getClass().getName()));
-                    }
 
                     try {
                         certificado.getCertificate().checkValidity(new Date());

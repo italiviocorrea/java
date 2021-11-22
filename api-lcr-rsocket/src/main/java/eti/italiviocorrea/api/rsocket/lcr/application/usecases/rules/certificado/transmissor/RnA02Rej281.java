@@ -28,7 +28,7 @@ public class RnA02Rej281 implements Supplier<RespostaValidacao> {
     @Override
     public RespostaValidacao get() {
 
-        if (ObjectUtils.isEmpty(certificado)) {
+        if (ObjectUtils.isEmpty(certificado) || ObjectUtils.isEmpty(certificado.getCertificate())) {
             return RespostaValidacao.resp999().trace("pre requisitos da regra").className(getClass().getName());
         }
 

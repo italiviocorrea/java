@@ -26,17 +26,19 @@ public class RnA07Rej282Mono implements Supplier<Mono<RespostaValidacao>> {
     @Override
     public Mono<RespostaValidacao> get() {
 
+        if (ObjectUtils.isEmpty(dadosCertificado) || ObjectUtils.isEmpty(dadosCertificado.getCertificate())) {
+            return Mono.just(RespostaValidacao.resp999().trace("pre requisitos da regra").className(getClass().getName()));
+        }
 
         return Mono.just(dadosCertificado)
-                .flatMap(dadosCertificado1 -> {
-                    if (ObjectUtils.isEmpty(dadosCertificado)) {
-                        return Mono.just(RespostaValidacao.resp999().trace("pre requisitos da regra").className(getClass().getName()));
-                    } else if (ObjectUtils.isEmpty(dadosCertificado.getCnpj())) {
-                        cacheInvalido.put(dadosCertificado.getCertificate(), dadosCertificado.getCertificate());
-                        return Mono.just(resp282);
-                    }
-                    return Mono.just(RespostaValidacao.builder().ok(true).cStat("100").xMotivo("OK").build());
-                });
+                .filter(dadosCertificado1 -> ObjectUtils.isEmpty(dadosCertificado1.getCnpj()))
+                .flatMap(dadosCertificado1 -> certificadoInvalido(dadosCertificado1))
+                .defaultIfEmpty(RespostaValidacao.builder().ok(true).cStat("100").xMotivo("OK").build());
 
+    }
+
+    private Mono<RespostaValidacao> certificadoInvalido(DadosCertificado dadosCertificado) {
+        cacheInvalido.put(dadosCertificado.getCertificate(), dadosCertificado.getCertificate());
+        return Mono.just(resp282);
     }
 }

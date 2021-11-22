@@ -74,7 +74,7 @@ public class APILcrRsocketController implements IAPILcrController {
     @WithSpan
     @MessageMapping("api-lcr.validar.certificado.transmissor")
     public Mono<RespostaDTO> validar(@Payload RequisicaoDTO requisicaoDTO) {
-        return validarMultiplos(requisicaoDTO.getCertificado(), 10);
+        return validarMultiplos(requisicaoDTO.getCertificado(), 1);
 //        return validarMultiplos(requisicaoDTO.getCertificado(), 3).subscribeOn(Schedulers.newParallel("rnA"));
     }
 

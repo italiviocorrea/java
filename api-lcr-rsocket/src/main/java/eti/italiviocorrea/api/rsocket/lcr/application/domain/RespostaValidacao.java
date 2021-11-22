@@ -38,7 +38,7 @@ public class RespostaValidacao implements Serializable {
 
     @JsonIgnore
     public static RespostaValidacao respOk() {
-        return RespostaValidacao.builder().ok(true).build();
+        return RespostaValidacao.builder().ok(true).cStat("100").build();
     }
 
     @JsonIgnore
