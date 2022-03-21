@@ -1,0 +1,19 @@
+version: "3"
+services:
+  api-payment-methods-client:
+    image: icorrea/api-payment-methods-client:1.0.0
+    environment:
+      region: "dev"
+      API_PAYMENT_METHODS_SERVER_HOST: 'api-payment-methods-server-hdl-service'
+      API_PAYMENT_METHODS_SERVER_PORT: 7000
+    ports:
+      - "8090:8090"
+    networks:
+      - my_net_dev
+    deploy:
+      replicas: 1
+
+networks:
+  my_net_dev:
+    external:
+      name: my_net_dev

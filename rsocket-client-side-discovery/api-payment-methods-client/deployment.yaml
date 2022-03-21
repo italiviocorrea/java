@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: api-payment-method-client
+  name: api-payment-method-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-payment-method-client
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: api-payment-method-client
+    spec:
+      containers:
+      - image: icorrea/api-payment-method-client:1.0.0
+        name: api-payment-method-client
+        env:
+          - name: API_PAYMENT_METHODS_SERVER_HOST
+            value: "api-payment-methods-server-hdl-service"
+          - name: API_PAYMENT_METHODS_SERVER_PORT
+            value: "7000"
+        ports:
+          - containerPort: 8090
+        readinessProbe:
+          tcpSocket:
+            port: 8090
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 8090
+          initialDelaySeconds: 30
+          periodSeconds: 20
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: api-payment-method-client-service
+  name: api-payment-method-client-service
+spec:
+  type: LoadBalancer
+  externalIPs:
+  - 10.105.47.73
+  ports:
+  - name: 8090-8090
+    port: 8090
+    protocol: TCP
+    targetPort: 8090
+  selector:
+    app: api-payment-method-client
+status:
+  loadBalancer: {}

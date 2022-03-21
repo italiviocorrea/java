@@ -1,0 +1,35 @@
+version: "3.2"
+services:
+  mssqldb:
+    image: microsoft/mssql-server-linux:2019-latest
+    environment:
+      ACCEPT_EULA: 'Y'
+      TZ: 'America/Campo_Grande'
+    env_file:
+      - sapassword.env
+    networks:
+      - my_net_dev
+    deploy:
+      replicas: 1
+    ports:
+      - '1433:1433'
+  api-payment-methods-hdl-service:
+    image: icorrea/api-payment-methods-server:0.0.1
+    env_file:
+      - sapassword.env
+    environment:
+      region: "dev"
+      API_DATABASE_HOST: 'mssqldb'
+      API_DATABASE_PORT: 1433
+      API_DATABASE_USER: 'sa'
+      API_DATABASE_PWD: '${MSSQL_SA_PASSWORD}'
+    networks:
+      - my_net_dev
+    deploy:
+      replicas: 2
+      endpoint_mode: dnsrr
+
+networks:
+  my_net_dev:
+    external:
+      name: my_net_dev

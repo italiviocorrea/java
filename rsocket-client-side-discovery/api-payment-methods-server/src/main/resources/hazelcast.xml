@@ -1,0 +1,15 @@
+<hazelcast xmlns="http://www.hazelcast.com/schema/config"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.hazelcast.com/schema/config
+                               https://www.hazelcast.com/schema/config/hazelcast-config-4.2.xsd">
+
+    <cluster-name>payment-dev</cluster-name>
+
+    <map name="paymentMethodCache">
+        <time-to-live-seconds>3600</time-to-live-seconds>
+        <max-idle-seconds>3600</max-idle-seconds>
+        <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="100"/>
+    </map>
+
+    <management-center />
+</hazelcast>

@@ -1,0 +1,69 @@
+app:
+  rsocket:
+    client:
+      payment:
+        discoveryMethod: 1    # 0 - Fixed; 1 - Dynamic
+        services:
+          - name: '${API_PAYMENT_METHODS_SERVER_HOST}'
+            port: '${API_PAYMENT_METHODS_SERVER_PORT}'
+spring:
+  #  main:
+  #    allow-bean-definition-overriding: true
+  application:
+    name: api-payment-method-client
+management:
+  endpoint:
+    health:
+      show-details: always
+      metrics:
+        enabled: true
+  endpoints:
+    web:
+      base-path: '/apm/manage'
+      exposure:
+        include: 'health,metrics,info,prometheus'
+      path-mapping:
+        health: healthcheck
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+        resilience4j:
+          circuitbreaker:
+            calls: true
+    tags:
+      application: '${spring.application.name}'
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 60
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        waitDurationInOpenState: 10s
+      shared:
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 30
+        slidingWindowSize: 100
+        waitDurationInOpenState: 45s
+    instances:
+      mydb:
+        baseConfig: default
+  retry:
+    configs:
+      default:
+        maxRetryAttempts: 4
+        waitDuration: 1000
+    instances:
+      nf3edb:
+        baseConfig: default
+server:
+  port: 8090
+
