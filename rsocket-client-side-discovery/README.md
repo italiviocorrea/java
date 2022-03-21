@@ -11,12 +11,12 @@ There are several ways to implement this, but here I'm going to use the DNS-base
 
 ## modules:
 
-**- rsocket-csd-core:** Este módulo possue a implementação do método de descoberta do lado cliente, e outras classes utilitárias necessárias para o processo.
+**- rsocket-csd-core:** This module has the implementation of the client-side discovery method, and other utility classes necessary for the process.
 
-**- api-payment-methods-client:** API Rest com webflux que fará o papel de client rsocket, aonde será implementado a Descoberta do Serviço do Lado Cliente.
+**- api-payment-methods-client:** Rest API with webflux that will play the role of rsocket client, where Client Side Service Discovery will be implemented.
 
-**- api-payment-methods-server:** API Rsocket ao qual o cliente acessará através do método de descoberta de serviço do lado cliente.
+**- api-payment-methods-server:** Rsocket API which the client will access via the client-side service discovery method.
 
-## Arquitetura
+## Architecture
 
 ![Processo principal](./docs/rsocket_discovery_client_side.drawio.png)
