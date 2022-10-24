@@ -17,10 +17,20 @@ spec:
     spec:
       containers:
       - name: api-payment-methods-server
-        image: icorrea/api-payment-methods-server:0.0.1
+        image: harbor.sgi.ms.gov.br/dfe/k0252.hom.api-nf3e-regras-comuns.v1:2.0.22
         env:
           - name: region
             value: "dev"
+          - name: api_database_name
+            value: "s901.ms"
+          - name: API_DATABASE_PORT
+            value: "1431"
+          - name: API_DATABASE_USER
+            value: "nfe"
+          - name: API_DATABASE_PWD
+            value: "t5#7f@9"
+          - name: API_DATABASE_NAME
+            value: "DFE_PRODUCAO"
         ports:
           - containerPort: 7000
         readinessProbe:

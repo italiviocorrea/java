@@ -1,0 +1,4 @@
+spring:
+  data:
+    mongodb:
+      uri: 'mongodb://${DB_CREDENCIAL:d0098:Ny6RJG11DzGu@s0547.ms}:27017/${DB_DATABASE:nf3e}?authSource=admin'
